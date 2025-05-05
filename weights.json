@@ -1,0 +1,6 @@
+{
+    "momentum": 0.25,
+    "volume_spike": 0.4,
+    "volatility": 0.15,
+    "consolidation_break": 0.2
+  }

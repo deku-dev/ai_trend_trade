@@ -1,0 +1,3 @@
+ticker,features
+AAPL,"{'volatility': 0.3, 'momentum': 0.7, 'volume_ratio': 1.5}"
+MSFT,"{'volatility': 0.2, 'momentum': 0.4, 'volume_ratio': 0.9}"
