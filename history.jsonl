@@ -1,2 +1,0 @@
-{"features": {"momentum": 0.9, "volume_spike": 0.8, "volatility": 0.5, "consolidation_break": 0.7}, "score_given": 90, "real_outcome": "trend success"}
-{"features": {"momentum": 0.6, "volume_spike": 0.7, "volatility": 0.9, "consolidation_break": 0.3}, "score_given": 85, "real_outcome": "trend failed"}
