@@ -41,6 +41,16 @@
                     "extra": "Considering current market conditions and potential for volatility, AAPL may break recent resistance levels."
                 }
             }
+        },
+        "2025-05-29": {
+            "result": {
+                "ticker": "AAPL",
+                "probability_value": 85,
+                "confidence": 8,
+                "justification": "Solid trend, increasing volume, strong fundamentals.",
+                "fundamental_impact": "Strong",
+                "extra": "Market leader with consistent performance."
+            }
         }
     },
     "TSLA": {
@@ -107,6 +117,18 @@
     "GAP": {
         "2025-05-24": {
             "result": {}
+        },
+        "2025-05-29": {
+            "result": {
+                "QS_Probability": "81.4%",
+                "Breakdown": {
+                    "Fractal_Stigma_Index": "FSI=0.72 [ACTIVE]",
+                    "Accumulation_Impulse": "AI=2.50 [THRESHOLD: 2.20]",
+                    "Topology_Stability": "Betti=\u03b2\u2081 | Persistence=2.0",
+                    "Smoothness_Condition": "SC=0.85 [MIN=0.8]",
+                    "Decoherence_Risk": "Gamma_Exposure=\u00b13.2%"
+                }
+            }
         }
     },
     "ENVX": {
@@ -148,6 +170,16 @@
                     "fundamental_impact": "Negative earnings, small revenue base. Limited current catalysts.",
                     "extra": "Watch for potential resistance at around recent highs. Volume momentum could drive further movement."
                 }
+            }
+        },
+        "2025-05-29": {
+            "result": {
+                "ticker": "IMNN",
+                "probability_value": 75,
+                "confidence": 7,
+                "justification": "High volatility, significant price movement, recent volume spikes.",
+                "fundamental_impact": "Negative",
+                "extra": "Weak financials, high uncertainty but strong price reaction."
             }
         }
     }
