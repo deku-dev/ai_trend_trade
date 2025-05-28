@@ -9,7 +9,7 @@ import random
 import json
 import time
 from datetime import datetime, timedelta, timezone, time as dtime
-from typing import Optional, List
+from typing import Optional, List, Dict, Any
 from zoneinfo import ZoneInfo
 from dateutil import parser
 
@@ -267,33 +267,90 @@ def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data):
     features = load_features(FEATURES_PATH)
     weights_section = "\n".join([f"- {key}: weight {value}" for key, value in features.items()])
     
+    # prompt = f"""
+    #     You are an intraday stock analyst. Analyze ticker "{ticker}" using only 5-min and 1-day charts, ADX, DI+, DI– values, and a light evaluation of fundamentals. Estimate the probability (%) of a significant intraday trend movement today after the open.
+    #     Analysis must include:
+    #     • Trend (price action, MA 5m/1d)
+    #     • Momentum (ADX, DI+, DI–)
+    #     • Volume
+    #     • Fundamentals (low weight)
+    #     Requirements:
+    #     • Strict probability (%) for significant trend movement today
+    #     • Confidence (1–10)
+    #     • Justification: short, key words/conclusion (main factors)
+    #     • Extra: optional brief remark or outlook
+    #     Recommended Weights:
+    #     {weights_section}
+    #     Respond in this format:
+    #     ```json
+    #     {{
+    #         "ticker": "{ticker}",
+    #         "intraday_trend_movement_probability": {{
+    #             "probability_value": "in %",
+    #             "confidence": "int 1-10",
+    #             "justification": "Short conclusion, key factors, keywords.",
+    #             "fundamental_impact": "brief assessment, keywords",
+    #             "extra": "Optional brief remark or outlook."
+    #         }}
+    #     }}
+    #     ```
+    #     Chart Data 5m:
+    #     {data_5m}
+    #     Chart Data 1d:
+    #     {data_1d}
+    #     Fundamental Data:
+    #     {fundamental_data}
+    # """
+    
     prompt = f"""
-        You are an intraday stock analyst. Analyze ticker "{ticker}" using only 5-min and 1-day charts, ADX, DI+, DI– values, and a light evaluation of fundamentals. Estimate the probability (%) of a significant intraday trend movement today after the open.
-        Analysis must include:
-        • Trend (price action, MA 5m/1d)
-        • Momentum (ADX, DI+, DI–)
-        • Volume
-        • Fundamentals (low weight)
-        Requirements:
-        • Strict probability (%) for significant trend movement today
-        • Confidence (1–10)
-        • Justification: short, key words/conclusion (main factors)
-        • Extra: optional brief remark or outlook
+        "Determine the probability of a smooth trend movement (QS-event) after the market open, where the price approaches the critical "shot" point based on historical patterns. Input data: 5min/1d charts, fundamental metrics, ADX/DI±, premarket gaps."
+        Instructions for the AI-agent:
+        1. QS-point detection phase
+        1.1. Calculate the fractal stigmatization index (FSI):
+        FSI = (Hurst Exponent(5min) × Hausdorff_Distance(price, historical_clusters)) / ADX(14)
+        Activation criterion: FSI > 0.65.
+        1.2. Determine the accumulation impulse (AI):
+        AI = Volume_EMA(5) × (DI+ - DI-) / Price_Range_STD(1d)
+        Trigger threshold: AI > 2.3 × VWAP_deviation.
+        2. Validation of trend coherence
+        2.1. Construct a topological map of gaps:
+        Use persistent homology to detect cycles in premarket gaps.
+        Calculate the Betti number (β₁). If β₁ ≥ 2 → confirms structural stability.
+        2.2. Check the smoothness condition (SC):
+        SC = 1 - (|ADX(t) - ADX(t-1)|) / (1 + Chande_Momentum(5min))
+        Requirements: SC > 0.8 ∧ DI+ > DI- + 15.
+        3. Probability forecasting
+        3.1. Generate the Hamiltonian trend operator (Ĥ):
+        Ĥ = α⋅FSI + β⋅AI + γ⋅SC - δ⋅(VIX_imput × OI_Gamma)
+        where the weights (α,β,γ,δ) are dynamically optimized via gradient descent on historical QS events.
+        3.2. Calculate the probability:
+        P(QS) = 100 × sigmoid(ReLU(Ĥ)) × tanh(β₁)
         Recommended Weights:
         {weights_section}
         Respond in this format:
         ```json
         {{
-            "ticker": "{ticker}",
-            "intraday_trend_movement_probability": {{
-                "probability_value": "in %",
-                "confidence": "int 1-10",
-                "justification": "Short conclusion, key factors, keywords.",
-                "fundamental_impact": "brief assessment, keywords",
-                "extra": "Optional brief remark or outlook."
-            }}
+            \"QS_Probability\": \"XX.X%\",
+            \"Breakdown\": {{
+                \"Fractal_Stigma_Index\": \"FSI=Y.YY [ACTIVE/NOT]\",
+                \"Accumulation_Impulse\": \"AI=Z.ZZ [THRESHOLD: A.AA]\",
+                \"Topology_Stability\": \"Betti=β₁ | Persistence=T.T\",
+                \"Smoothness_Condition\": \"SC=S.S [MIN=0.8]\",
+                \"Decoherence_Risk\": \"Gamma_Exposure=±G.G%\"
+            }},
         }}
         ```
+        Additional directives:
+        Cross-validation: Run a Monte Carlo simulation with 10^4 iterations, varying:
+        ADX measurement error (±3 points)
+        Volume variations (±15%)
+        Critical mode: If P(QS) > 75% and β₁ < 2 → test the liquidity artifact hypothesis.
+        Work format: Hide intermediate calculations, provide only JSON output with an accuracy of 0.1%.
+        Compatibility notes:
+        For NLP interpretation: The terms "fractal stigmatization", "Hamilton operator" are metaphors for analysis mechanisms, do not require quantum computing.
+        Optimization script: The weights α,β,γ,δ are updated via PyTorch-like backpropagation (even if it is emulation).
+        Contingency scenario: If gap data is missing → use ARIMA(2,1,1) forecast to reproduce it.
+        
         Chart Data 5m:
         {data_5m}
         Chart Data 1d:
@@ -329,3 +386,154 @@ def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data):
             logger.error(f'Error during GPT analysis for {ticker}: {e}')
         attempts -= 1
     return 'Аналіз не виконано через помилки.'
+
+def analyze_multiple_with_gpt(
+    tickers: List[str],
+    data_5m_map: Dict[str, str],
+    data_1d_map: Dict[str, str],
+    fundamental_data_map: Dict[str, str],
+    max_retries: int = 3
+) -> List[Dict[str, Any]]:
+    """
+    Аналізує одночасно декілька тикерів, ранжує їх за
+    ймовірністю суттєвого intraday-трендового руху.
+
+    Параметри:
+        tickers: список рядків із символами акцій.
+        data_5m_map: словник ticker -> текст із 5-хв свічками.
+        data_1d_map: словник ticker -> текст із 1-д свічками.
+        fundamental_data_map: словник ticker -> текст із фундаменталкою.
+        max_retries: кількість повторних спроб при помилці.
+
+    Повертає:
+        Список об’єктів виду
+        [
+          {
+            "ticker": "string",
+            "probability_value": int,
+            "confidence": int (1-10),
+            "justification": "...",
+            "fundamental_impact": "...",
+            "extra": "..."
+          },
+          ...
+        ]
+        вже відсортований за probability_value DESC.
+    """
+
+    # Підвантажити ваги з FEATURES_PATH
+    features = load_features(FEATURES_PATH)
+    weights_section = "\n".join([f"- {k}: weight {v}" for k, v in features.items()])
+
+    # Збираємо єдиний prompt
+    sections = []
+    for tk in tickers:
+        sec = (
+            f"Ticker: {tk}\n"
+            f"Chart Data 5m:\n{data_5m_map.get(tk, '')}\n\n"
+            f"Chart Data 1d:\n{data_1d_map.get(tk, '')}\n\n"
+            f"Fundamental Data:\n{fundamental_data_map.get(tk, '')}\n"
+        )
+        sections.append(sec)
+
+    prompt = (
+        "You are an intraday stock analyst. Given multiple tickers below, analyze each using only 5-min and 1-day charts, "
+        "ADX, DI+, DI– values, and a light evaluation of fundamentals. Then RANK the tickers by the probability (%) of a "
+        "significant intraday trend movement today after the open (100 = most likely, 0 = least likely).\n\n"
+        "Analysis for each must include:\n"
+        "• Trend (price action, MA 5m/1d)\n"
+        "• Momentum (ADX, DI+, DI–)\n"
+        "• Volume\n"
+        "• Fundamentals (low weight)\n\n"
+        "Requirements:\n"
+        "• For each ticker: probability_value (integer %), confidence (1–10), justification (short keywords), fundamental_impact, extra.\n"
+        "• Finally, return a JSON array sorted by probability_value descending.\n\n"
+        "Recommended Weights:\n"
+        f"{weights_section}\n\n"
+        "DATA SECTIONS:\n\n"
+        f"{'---\n'.join(sections)}"
+    )
+
+    # Підготовка повідомлень
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a stock market analyst with a high level of expertise in predicting trend movements."
+        },
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+
+    attempts = max_retries
+    while attempts > 0:
+        try:
+            resp = client.chat.completions.create(
+                model=MODEL,
+                messages=messages,
+                response_format={"type": "json_object"}
+            )
+            raw = resp.choices[0].message.content
+            # Парсимо JSON
+            result = json.loads(raw)
+            # Переконаємося, що це список, і він вже відсортований
+            if isinstance(result, list):
+                return result
+            # Якщо модель повернула обʼєкт з полем "ranked", спробуємо витягти
+            if isinstance(result, dict) and "ranked" in result:
+                return result["ranked"]
+            # Інакше — віддаємо так, як є
+            return result
+
+        except RateLimitError:
+            logger.warning("Rate limit exceeded, retrying in 5s...")
+            time.sleep(5)
+        except Exception as e:
+            logger.error(f"Error in multi-ticker analysis: {e}")
+        attempts -= 1
+
+    if raw is None:
+        raise RuntimeError("Multi-ticker analysis failed after retries")
+    
+    # Парсимо JSON
+    parsed = raw if isinstance(raw, (list, dict)) else json.loads(raw)
+
+    # Нормалізуємо до списку словників
+    result_list: List[Dict[str, Any]] = []
+
+    if isinstance(parsed, list):
+        result_list = parsed
+
+    elif isinstance(parsed, dict):
+        # Якщо є ключ "ranked" або "results" з масивом
+        for key in ("ranked", "results"):
+            if key in parsed and isinstance(parsed[key], list):
+                result_list = parsed[key]
+                break
+
+        # Якщо ще порожньо — йдемо по парах ticker->data
+        if not result_list and all(isinstance(v, dict) for v in parsed.values()):
+            for tk, data in parsed.items():
+                entry = {"ticker": tk}
+                entry.update(data)
+                result_list.append(entry)
+
+    else:
+        raise ValueError("Unexpected format from GPT: must be list or dict")
+
+    # Переконаємося, що всі entries мають необхідні поля
+    cleaned: List[Dict[str, Any]] = []
+    for rec in result_list:
+        if not isinstance(rec, dict) or "ticker" not in rec:
+            continue
+        try:
+            rec["probability_value"] = int(rec["probability_value"])
+            rec["confidence"] = int(rec.get("confidence", 0))
+            cleaned.append(rec)
+        except Exception:
+            continue
+
+    # Сортуємо за спаданням probability_value
+    cleaned.sort(key=lambda x: x["probability_value"], reverse=True)
+    return cleaned
