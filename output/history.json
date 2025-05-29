@@ -45,11 +45,11 @@
         "2025-05-29": {
             "result": {
                 "ticker": "AAPL",
-                "probability_value": 85,
-                "confidence": 8,
-                "justification": "Solid trend, increasing volume, strong fundamentals.",
-                "fundamental_impact": "Strong",
-                "extra": "Market leader with consistent performance."
+                "probability_value": 30,
+                "confidence": 5,
+                "justification": "choppy trading, indecision, high volume near close, support untested",
+                "fundamental_impact": "overall market sentiment.",
+                "extra": "Watch key support at 205."
             }
         }
     },
@@ -99,6 +99,9 @@
                     "extra": "While the overall trend is upward, potential volatility may create opportunities for both bullish and bearish movements."
                 }
             }
+        },
+        "2025-05-29": {
+            "result": null
         }
     },
     "SPY": {
@@ -119,16 +122,18 @@
             "result": {}
         },
         "2025-05-29": {
-            "result": {
-                "QS_Probability": "81.4%",
-                "Breakdown": {
-                    "Fractal_Stigma_Index": "FSI=0.72 [ACTIVE]",
-                    "Accumulation_Impulse": "AI=2.50 [THRESHOLD: 2.20]",
-                    "Topology_Stability": "Betti=\u03b2\u2081 | Persistence=2.0",
-                    "Smoothness_Condition": "SC=0.85 [MIN=0.8]",
-                    "Decoherence_Risk": "Gamma_Exposure=\u00b13.2%"
+            "result": [
+                {
+                    "ticker": "GAP",
+                    "intraday_trend_movement_probability": {
+                        "probability_value": "75%",
+                        "confidence": 7,
+                        "justification": "Strong upward trend after the open, high volume. Positive momentum.",
+                        "fundamental_impact": "Minimal impact.",
+                        "extra": "Possible resistance around $29.30."
+                    }
                 }
-            }
+            ]
         }
     },
     "ENVX": {
@@ -143,6 +148,9 @@
                     "extra": "Monitor closely around resistance levels; potential for sharp movements based on news or broader market shifts."
                 }
             }
+        },
+        "2025-05-29": {
+            "result": null
         }
     },
     "BLMZ": {
@@ -175,12 +183,63 @@
         "2025-05-29": {
             "result": {
                 "ticker": "IMNN",
-                "probability_value": 75,
-                "confidence": 7,
-                "justification": "High volatility, significant price movement, recent volume spikes.",
-                "fundamental_impact": "Negative",
-                "extra": "Weak financials, high uncertainty but strong price reaction."
+                "probability_value": 5,
+                "confidence": 2,
+                "justification": "low volume, consistent downtrend, failed rallies",
+                "fundamental_impact": "Weak financials.",
+                "extra": "Expect continuation of downtrend"
             }
+        }
+    },
+    "ACI": {
+        "2025-05-29": {
+            "result": null
+        }
+    },
+    "AFRM": {
+        "2025-05-29": {
+            "result": {
+                "ticker": "AFRM",
+                "probability_value": 40,
+                "confidence": 6,
+                "justification": "volume spike, but downtrend, broke support, ADX weak",
+                "fundamental_impact": "Fintech sector bearish.",
+                "extra": "Watch for further downside momentum"
+            }
+        }
+    },
+    "ALAB": {
+        "2025-05-29": {
+            "result": {
+                "ticker": "ALAB",
+                "probability_value": 55,
+                "confidence": 6,
+                "justification": "high volume early, testing recent highs, strong daily trend",
+                "fundamental_impact": "potential analyst upgrade in the near future.",
+                "extra": "RSI nearing overbought, pullback possible"
+            }
+        }
+    },
+    "AVGO": {
+        "2025-05-29": {
+            "result": {
+                "ticker": "AVGO",
+                "probability_value": 60,
+                "confidence": 7,
+                "justification": "volume spike, intraday trend up, testing resistance",
+                "fundamental_impact": "Semiconductor sector strength could boost.",
+                "extra": "Watch for breakout confirmation above 232."
+            }
+        }
+    },
+    "ANVX": {
+        "2025-05-29": {
+            "result": null
+        }
+    },
+    "[2025-05-22]": {
+        "2025-05-29": {
+            "result": null
         }
     }
 }
