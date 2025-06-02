@@ -5,7 +5,7 @@ from typing import Optional, List, Dict, Any
 from loguru import logger
 
 from config import OPENAI_API_KEY
-from utils import load_features
+from app.utils_ai import load_features
 
 MODEL = 'gpt-4o-mini'
 

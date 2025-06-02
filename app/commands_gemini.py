@@ -9,10 +9,10 @@ from telegram.ext import (
     ContextTypes
 )
 
-from utils import validate_date, add_to_history, update_history, load_tickers
-from chart_data import fetch_market_prompt
-from financial_data import fetch_financial_prompt
-from gemini_handler import analyze_with_gemini, analyze_multiple_with_gemini
+from app.utils_ai import validate_date, add_to_history, update_history, load_tickers
+from app.chart_data import fetch_market_prompt
+from app.financial_data import fetch_financial_prompt
+from app.gemini_handler import analyze_with_gemini, analyze_multiple_with_gemini
 
 async def analyze_gem(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     args = context.args

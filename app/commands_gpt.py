@@ -9,10 +9,10 @@ from telegram.ext import (
 )
 from typing import Dict, List
 
-from utils import validate_date, add_to_history, update_history, load_tickers
-from chart_data import fetch_market_prompt
-from gpt_handler import analyze_with_gpt, analyze_multiple_with_gpt
-from financial_data import fetch_financial_prompt
+from app.utils_ai import validate_date, add_to_history, update_history, load_tickers
+from app.chart_data import fetch_market_prompt
+from app.gpt_handler import analyze_with_gpt, analyze_multiple_with_gpt
+from app.financial_data import fetch_financial_prompt
 
 
 async def analyze_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

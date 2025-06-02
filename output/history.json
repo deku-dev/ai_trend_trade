@@ -51,6 +51,16 @@
                 "fundamental_impact": "overall market sentiment.",
                 "extra": "Watch key support at 205."
             }
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "AAPL",
+                "probability_value": 45,
+                "confidence": 6,
+                "justification": "high volume in the morning, intraday volatility, testing resistance",
+                "fundamental_impact": "Positive, steady performance.",
+                "extra": "Moving averages flat, watch for RSI to confirm breakout."
+            }
         }
     },
     "TSLA": {
@@ -102,6 +112,16 @@
         },
         "2025-05-29": {
             "result": null
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "AA",
+                "probability_value": 5,
+                "confidence": 2,
+                "justification": "Choppy price action, indecisive volume",
+                "fundamental_impact": "Unclear.",
+                "extra": "Avoid, no clear setup"
+            }
         }
     },
     "SPY": {
@@ -151,6 +171,9 @@
         },
         "2025-05-29": {
             "result": null
+        },
+        "2025-06-02": {
+            "result": null
         }
     },
     "BLMZ": {
@@ -189,11 +212,31 @@
                 "fundamental_impact": "Weak financials.",
                 "extra": "Expect continuation of downtrend"
             }
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "IMNN",
+                "probability_value": 5,
+                "confidence": 2,
+                "justification": "Low volume, no clear trend, mostly sideways",
+                "fundamental_impact": "Weak financials, high risk",
+                "extra": "Avoid, no clear setup"
+            }
         }
     },
     "ACI": {
         "2025-05-29": {
             "result": null
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "ACI",
+                "probability_value": 40,
+                "confidence": 5,
+                "justification": "volume spike, intraday recovery, broke MA5",
+                "fundamental_impact": "Unclear.",
+                "extra": "High risk, ADX not confirming a strong trend."
+            }
         }
     },
     "AFRM": {
@@ -205,6 +248,16 @@
                 "justification": "volume spike, but downtrend, broke support, ADX weak",
                 "fundamental_impact": "Fintech sector bearish.",
                 "extra": "Watch for further downside momentum"
+            }
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "AFRM",
+                "probability_value": 30,
+                "confidence": 4,
+                "justification": "Recent high volume but volatile, indecisive price action",
+                "fundamental_impact": "Mixed financials.",
+                "extra": "Unclear trend, high risk."
             }
         }
     },
@@ -218,6 +271,16 @@
                 "fundamental_impact": "potential analyst upgrade in the near future.",
                 "extra": "RSI nearing overbought, pullback possible"
             }
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "ALAB",
+                "probability_value": 60,
+                "confidence": 6,
+                "justification": "high volume, intraday breakout, testing resistance",
+                "fundamental_impact": "Fundamentals are positive, supporting breakout",
+                "extra": "RSI overbought, watch for pullback after initial move"
+            }
         }
     },
     "AVGO": {
@@ -229,6 +292,16 @@
                 "justification": "volume spike, intraday trend up, testing resistance",
                 "fundamental_impact": "Semiconductor sector strength could boost.",
                 "extra": "Watch for breakout confirmation above 232."
+            }
+        },
+        "2025-06-02": {
+            "result": {
+                "ticker": "AVGO",
+                "probability_value": 70,
+                "confidence": 7,
+                "justification": "volume spike, uptrend, broke intraday resistance",
+                "fundamental_impact": "Strong fundamentals support further upside",
+                "extra": "Watch for consolidation at new highs."
             }
         }
     },

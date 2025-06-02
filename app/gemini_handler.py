@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field
 from loguru import logger
 
 from config import GEMINI_API
-from utils import load_features
+from app.utils_ai import load_features
 
 
 clientGemini = genai.Client(api_key=GEMINI_API)
