@@ -6,8 +6,8 @@ from pydantic import BaseModel, Field
 from loguru import logger
 
 from config import GEMINI_API
-from app.utils_ai import load_features
-
+from app.prompt_manager import get_active_prompt
+from app.weights_manager import get_active_weights, format_weights_for_prompt
 
 clientGemini = genai.Client(api_key=GEMINI_API)
 
@@ -48,6 +48,7 @@ def analyze_with_gemini(
     data_5m: str,
     data_1d: str,
     fundamental_data: str,
+    user_id: Optional[int] = None
 ):
     """
     Виконує аналіз інтрадея для заданого тикера за допомогою Gemini-4.
@@ -57,10 +58,7 @@ def analyze_with_gemini(
         data_5m: Серіалізовані дані 5-хвилинного графіка.
         data_1d: Серіалізовані дані денного графіка.
         fundamental_data: Текстові дані фундаментального аналізу.
-        features_path: Шлях до JSON-файлу з рекомендованими вагами ознак.
-        model: Інстанс моделі Gemini з методом generate_content.
-        max_retries: Кількість спроб запиту, якщо щось піде не так.
-        retry_delay: Затримка між спробами (у секундах).
+        user_id: ID користувача для персоналізації ваг та промптів
 
     Повертає:
         Словник із полями:
@@ -76,38 +74,42 @@ def analyze_with_gemini(
             }
         або рядок з повідомленням про помилку.
     """
-    # Завантажуємо ваги ознак
-    features = load_features()
-    weights_section = "\n".join(f"- {k}: weight {v}" for k, v in features.items())
+    # Отримуємо активний промпт та ваги для користувача
+    prompt_template = get_active_prompt(user_id)
+    weights = get_active_weights(user_id)
+    weights_section = format_weights_for_prompt(weights)
 
-    prompt = f"""
-        You are an intraday stock analyst. Analyze ticker "{ticker}" using only 5-min and 1-day charts, ADX, DI+, DI– values, and a light evaluation of fundamentals. Estimate the probability (%) of a significant intraday trend movement today after the open.
-        Analysis must include:
-        • Trend (price action, MA 5m/1d)
-        • Momentum (ADX, DI+, DI–)
-        • Volume
-        • Fundamentals (low weight)
-        Requirements:
-        • Strict probability (%) for significant trend movement today
-        • Confidence (1–10)
-        • Justification: short, key words/conclusion (main factors)
-        • Extra: optional brief remark or outlook
+    # Форматуємо промпт з динамічними даними
+    full_prompt = f"""
+        {prompt_template}
         Recommended Weights:
         {weights_section}
+        Respond in this format:
+        ```json
+        {{
+            "ticker": "{ticker}",
+            "intraday_trend_movement_probability": {{
+                "probability_value": "in %",
+                "confidence": "int 1-10",
+                "justification": "Short conclusion, key factors, keywords.",
+                "fundamental_impact": "brief assessment, keywords",
+                "extra": "Optional brief remark or outlook."
+            }}
+        }}
+        ```
         Chart Data 5m:
         {data_5m}
         Chart Data 1d:
         {data_1d}
         Fundamental Data:
-        {fundamental_data}
-        """.strip()
+        {fundamental_data}"""
         
     max_retries = 3
     for attempt in range(1, max_retries + 1):
         try:
             response = clientGemini.models.generate_content(
                 model="gemini-2.0-flash",
-                contents=prompt,
+                contents=full_prompt,
                 config={
                     "response_mime_type": "application/json",
                     "response_schema": list[IntradayAnalysis],
@@ -125,7 +127,7 @@ def analyze_with_gemini(
             logger.error(f"[{ticker}] Помилка на спробі {attempt}/{max_retries}: {e}", exc_info=True)
 
         if attempt < max_retries:
-            time.sleep(1000)
+            time.sleep(1)  # Зменшено час очікування до 1 секунди
 
     error_msg = f"Аналіз {ticker} не виконано після {max_retries} спроб."
     logger.error(error_msg)
@@ -137,6 +139,7 @@ def analyze_multiple_with_gemini(
     data_1d_map: Dict[str, str],
     fundamental_data_map: Dict[str, str],
     max_retries: int = 3,
+    user_id: Optional[int] = None
 ) -> List[Dict[str, Any]]:
     """
     Аналізує одночасно декілька тикерів за допомогою Gemini.
@@ -148,6 +151,7 @@ def analyze_multiple_with_gemini(
         data_1d_map: ticker -> текст із 1-д свічками.
         fundamental_data_map: ticker -> текст із фундаментального аналізу.
         max_retries: кількість спроб при помилці.
+        user_id: ID користувача для персоналізації ваг
 
     Повертає:
         Відсортований за probability_value DESC список словників виду:
@@ -160,9 +164,10 @@ def analyze_multiple_with_gemini(
           "extra": str
         }
     """
-    # Завантажуємо рекомендовані ваги ознак
-    features = load_features()
-    weights_section = "\n".join(f"- {k}: weight {v}" for k, v in features.items())
+    # Отримуємо активні ваги для користувача
+    prompt_template = get_active_prompt(user_id)
+    weights = get_active_weights(user_id)
+    weights_section = format_weights_for_prompt(weights)
 
     # Формуємо секції даних для кожного тикера
     sections = []
@@ -177,26 +182,7 @@ def analyze_multiple_with_gemini(
 
     # Формуємо промпт для Gemini
     prompt = f"""
-        You are an intraday stock analyst with the seriousness and discipline of a professional trader. My grandfather is terminally ill and has always dreamed of, in his final days, understanding which single stock is most likely to break out and trend today. He placed his last hope in your analysis.
-
-        Given the list of tickers below, analyze each using only:
-        • 5-minute and 1-day price charts (include moving averages MA5, MA20 where relevant)
-        • ADX, DI+, DI– for momentum strength
-        • Volume spikes and divergences
-        • Key support/resistance levels and imminent breakouts
-        • Fundamentals with low weight
-
-        For each ticker, determine:
-        1. probability_value: integer % likelihood of a **significant intraday trend** today (after market open), factoring in clear breakout above resistance or breakdown below support  
-        2. confidence: integer 1–10  
-        3. justification: very concise keywords (“ADX>25, volume spike, broke R1”)  
-        4. fundamental_impact: brief note on any fundamental driver  
-        5. extra: optional short outlook (“watch RSI for pullback”)
-
-        **Important:**  
-        - Treat each ticker as if you were risking your own capital.  
-        - Be ruthless and precise: only the strongest breakout setups should score near 100%.  
-        - Return a **pure** JSON array, sorted by probability_value DESC.  
+        {prompt_template} 
 
         Recommended Weights for Your Analysis:
         {weights_section}
@@ -244,7 +230,7 @@ def analyze_multiple_with_gemini(
 
         # Затримка перед повторною спробою
         if attempt < max_retries:
-            time.sleep(5)
+            time.sleep(1)  # Зменшено час очікування до 1 секунди
 
     # Після max_retries — кидаємо або повертаємо помилку
     error_msg = f"Multi-ticker analysis failed after {max_retries} attempts: {last_error}"

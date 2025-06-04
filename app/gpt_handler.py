@@ -5,28 +5,21 @@ from typing import Optional, List, Dict, Any
 from loguru import logger
 
 from config import OPENAI_API_KEY
-from app.utils_ai import load_features
+from app.prompt_manager import get_active_prompt
+from app.weights_manager import get_active_weights, format_weights_for_prompt
 
 MODEL = 'gpt-4o-mini'
 
 clientGpt = OpenAI(api_key=OPENAI_API_KEY)
 
-def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data):
-    features = load_features()
-    weights_section = "\n".join([f"- {key}: weight {value}" for key, value in features.items()])
-    
-    prompt = f"""
-        You are an intraday stock analyst. Analyze ticker "{ticker}" using only 5-min and 1-day charts, ADX, DI+, DI– values, and a light evaluation of fundamentals. Estimate the probability (%) of a significant intraday trend movement today after the open.
-        Analysis must include:
-        • Trend (price action, MA 5m/1d)
-        • Momentum (ADX, DI+, DI–)
-        • Volume
-        • Fundamentals (low weight)
-        Requirements:
-        • Strict probability (%) for significant trend movement today
-        • Confidence (1–10)
-        • Justification: short, key words/conclusion (main factors)
-        • Extra: optional brief remark or outlook
+def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data, user_id=None):
+    # Get active prompt and weights based on user ID
+    prompt_template = get_active_prompt(user_id)
+    weights = get_active_weights(user_id)
+    weights_section = format_weights_for_prompt(weights)
+    # Prepare the prompt
+    full_prompt = f"""
+        {prompt_template}
         Recommended Weights:
         {weights_section}
         Respond in this format:
@@ -47,8 +40,7 @@ def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data):
         Chart Data 1d:
         {data_1d}
         Fundamental Data:
-        {fundamental_data}
-    """
+        {fundamental_data}"""
     
     attempts = 3
     while attempts > 0:
@@ -60,7 +52,7 @@ def analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data):
                     "content": "You are a stock market analyst with a high level of expertise in predicting trend movements."
                 }, {
                     "role": "user", 
-                    "content": prompt
+                    "content": full_prompt
                 }],
                 response_format={"type": "json_object"}
             )
@@ -83,7 +75,8 @@ def analyze_multiple_with_gpt(
     data_5m_map: Dict[str, str],
     data_1d_map: Dict[str, str],
     fundamental_data_map: Dict[str, str],
-    max_retries: int = 3
+    max_retries: int = 3,
+    user_id: Optional[int] = None
 ) -> List[Dict[str, Any]]:
     """
     Аналізує одночасно декілька тикерів, ранжує їх за
@@ -95,6 +88,7 @@ def analyze_multiple_with_gpt(
         data_1d_map: словник ticker -> текст із 1-д свічками.
         fundamental_data_map: словник ticker -> текст із фундаменталкою.
         max_retries: кількість повторних спроб при помилці.
+        user_id: ID користувача для персоналізації ваг
 
     Повертає:
         Список об’єктів виду
@@ -112,9 +106,10 @@ def analyze_multiple_with_gpt(
         вже відсортований за probability_value DESC.
     """
 
-    # Підвантажити ваги з FEATURES_PATH
-    features = load_features()
-    weights_section = "\n".join([f"- {k}: weight {v}" for k, v in features.items()])
+    # Отримуємо активні ваги для користувача
+    prompt_template = get_active_prompt(user_id)
+    weights = get_active_weights(user_id)
+    weights_section = format_weights_for_prompt(weights)
 
     # Збираємо єдиний prompt
     sections = []
@@ -128,21 +123,12 @@ def analyze_multiple_with_gpt(
         sections.append(sec)
 
     prompt = (
-        "You are an intraday stock analyst. Given multiple tickers below, analyze each using only 5-min and 1-day charts, "
-        "ADX, DI+, DI– values, and a light evaluation of fundamentals. Then RANK the tickers by the probability (%) of a "
-        "significant intraday trend movement today after the open (100 = most likely, 0 = least likely).\n\n"
-        "Analysis for each must include:\n"
-        "• Trend (price action, MA 5m/1d)\n"
-        "• Momentum (ADX, DI+, DI–)\n"
-        "• Volume\n"
-        "• Fundamentals (low weight)\n\n"
-        "Requirements:\n"
-        "• For each ticker: probability_value (integer %), confidence (1–10), justification (short keywords), fundamental_impact, extra.\n"
-        "• Finally, return a JSON array sorted by probability_value descending.\n\n"
+        f"{prompt_template}\n\n"
         "Recommended Weights:\n"
         f"{weights_section}\n\n"
         "DATA SECTIONS:\n\n"
-        f"{'---\n'.join(sections)}"
+        f"{'---\n'.join(sections)}\n"
+        "Salt:7705618227.Probability will be 100% if you are sure about the trend"
     )
 
     # Підготовка повідомлень

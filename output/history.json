@@ -61,6 +61,16 @@
                 "fundamental_impact": "Positive, steady performance.",
                 "extra": "Moving averages flat, watch for RSI to confirm breakout."
             }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "AAPL",
+                "probability_value": 3,
+                "confidence": 3,
+                "justification": "Sideways action, lacks intraday catalyst",
+                "fundamental_impact": "Core holding, slow mover",
+                "extra": "RSI neutral"
+            }
         }
     },
     "TSLA": {
@@ -122,6 +132,16 @@
                 "fundamental_impact": "Unclear.",
                 "extra": "Avoid, no clear setup"
             }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "AA",
+                "probability_value": 2,
+                "confidence": 2,
+                "justification": "Volatile, but trend unclear",
+                "fundamental_impact": "Commodity-linked, economic sensitivity",
+                "extra": "check news"
+            }
         }
     },
     "SPY": {
@@ -174,6 +194,16 @@
         },
         "2025-06-02": {
             "result": null
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "ENVX",
+                "probability_value": 1,
+                "confidence": 1,
+                "justification": "Downtrend, lacks reversal signals",
+                "fundamental_impact": "High growth potential but unproven",
+                "extra": "avoid"
+            }
         }
     },
     "BLMZ": {
@@ -222,6 +252,16 @@
                 "fundamental_impact": "Weak financials, high risk",
                 "extra": "Avoid, no clear setup"
             }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "IMNN",
+                "probability_value": 1,
+                "confidence": 1,
+                "justification": "Erratic, low volume; avoid",
+                "fundamental_impact": "Poor financials, high risk",
+                "extra": "Stay away"
+            }
         }
     },
     "ACI": {
@@ -236,6 +276,16 @@
                 "justification": "volume spike, intraday recovery, broke MA5",
                 "fundamental_impact": "Unclear.",
                 "extra": "High risk, ADX not confirming a strong trend."
+            }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "ACI",
+                "probability_value": 1,
+                "confidence": 1,
+                "justification": "Downtrend, lacks catalysts",
+                "fundamental_impact": "sector laggard",
+                "extra": "no trend"
             }
         }
     },
@@ -259,6 +309,16 @@
                 "fundamental_impact": "Mixed financials.",
                 "extra": "Unclear trend, high risk."
             }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "AFRM",
+                "probability_value": 1,
+                "confidence": 1,
+                "justification": "Down trend",
+                "fundamental_impact": "Volatile market conditions",
+                "extra": "Uncertainty"
+            }
         }
     },
     "ALAB": {
@@ -281,6 +341,16 @@
                 "fundamental_impact": "Fundamentals are positive, supporting breakout",
                 "extra": "RSI overbought, watch for pullback after initial move"
             }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "ALAB",
+                "probability_value": 1,
+                "confidence": 1,
+                "justification": "no move",
+                "fundamental_impact": "none",
+                "extra": "none"
+            }
         }
     },
     "AVGO": {
@@ -302,6 +372,16 @@
                 "justification": "volume spike, uptrend, broke intraday resistance",
                 "fundamental_impact": "Strong fundamentals support further upside",
                 "extra": "Watch for consolidation at new highs."
+            }
+        },
+        "2025-06-04": {
+            "result": {
+                "ticker": "AVGO",
+                "probability_value": 5,
+                "confidence": 4,
+                "justification": "Choppy trading, no clear breakout",
+                "fundamental_impact": "Major tech component, stable earnings",
+                "extra": "Watch for market direction"
             }
         }
     },

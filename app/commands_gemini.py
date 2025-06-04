@@ -45,7 +45,7 @@ async def analyze_gem(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         )
         fundamental_data = fetch_financial_prompt(ticker, filing_date_to=target_date.strftime('%Y-%m-%d'))
 
-        result = analyze_with_gemini(ticker, data_5m, data_1d, fundamental_data)
+        result = analyze_with_gemini(ticker, data_5m, data_1d, fundamental_data, user_id=update.effective_user.id)
         add_to_history(ticker)
         update_history(ticker, result)
 
@@ -83,17 +83,12 @@ async def analyze_all_gem(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
     )
 
     # 4) Збираємо дані для кожного тикера
-    data_1m_map: Dict[str, str] = {}
     data_5m_map: Dict[str, str] = {}
     data_1d_map: Dict[str, str] = {}
     fundamental_map: Dict[str, str] = {}
 
     for tk in tickers:
         try:
-            data_1m_map[tk] = fetch_market_prompt(
-                tk, multiplier=1, timespan='minute', days=1,
-                end_date=target_date.strftime('%Y-%m-%d')
-            )
             data_5m_map[tk] = fetch_market_prompt(
                 tk, multiplier=5, timespan='minute', days=3,
                 end_date=target_date.strftime('%Y-%m-%d')
@@ -118,7 +113,8 @@ async def analyze_all_gem(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
             tickers,
             data_5m_map,
             data_1d_map,
-            fundamental_map
+            fundamental_map,
+            user_id=update.effective_user.id
         )
     except Exception as e:
         logger.error(f"Error in multi-ticker analysis: {e}")
