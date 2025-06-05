@@ -1,398 +1,64 @@
 {
-    "AAPL": {
-        "2025-05-11": {
-            "result": {
-                "ticker": "AAPL",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 75,
-                    "confidence": "high",
-                    "justification": "Key indicators indicate a potential for significant upward movement. Analysis shows strong support near the 197.3 level, recent bullish price action with a closing price above previous session high, and positive momentum from RSI nearing 60, indicating buying momentum. Volume spikes confirm interest in the upward trend, particularly with higher than average trading volumes. Additionally, the stock has recently tested and bounced off key Fibonacci levels, which supports a bullish outlook today."
-                }
-            }
-        },
-        "2025-05-19": {
-            "result": {
-                "ticker": "AAPL",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 78,
-                    "confidence": "high",
-                    "justification": "The intraday analysis of AAPL indicates a strong potential for trend movement. Both the short-term moving averages and the RSI show bullish sentiment, with the 5-minute SMA trending upwards alongside a positive ADX indicating potential momentum. Volume analysis reveals significant spikes, notably during the opening period, which typically supports a continuation of the initial trend. Additionally, supportive technical indicators, including Fibonacci retracement levels and session highs, coalesce to suggest that the stock will likely experience a substantial movement today."
-                }
-            }
-        },
-        "2025-05-22": {
-            "result": {
-                "ticker": "AAPL",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 80,
-                    "confidence": "high",
-                    "justification": "Strong momentum indicated by ADX values exceeding 40. Price trending upwards with recent MA support.",
-                    "extra": "Watch for potential resistance at $184.75; a breakout above could catalyze further upward movement."
-                }
-            }
-        },
-        "2025-05-24": {
-            "result": {
-                "ticker": "AAPL",
-                "intraday_trend_movement_probability": {
-                    "probability_value": "65%",
-                    "confidence": "7",
-                    "justification": "Price shows strong momentum with recent upward trend in both 5m and daily timeframes. Increased volume and positive ADX indicate strong trend potential.",
-                    "extra": "Considering current market conditions and potential for volatility, AAPL may break recent resistance levels."
-                }
-            }
-        },
-        "2025-05-29": {
-            "result": {
-                "ticker": "AAPL",
-                "probability_value": 30,
-                "confidence": 5,
-                "justification": "choppy trading, indecision, high volume near close, support untested",
-                "fundamental_impact": "overall market sentiment.",
-                "extra": "Watch key support at 205."
-            }
-        },
-        "2025-06-02": {
-            "result": {
-                "ticker": "AAPL",
-                "probability_value": 45,
-                "confidence": 6,
-                "justification": "high volume in the morning, intraday volatility, testing resistance",
-                "fundamental_impact": "Positive, steady performance.",
-                "extra": "Moving averages flat, watch for RSI to confirm breakout."
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "AAPL",
-                "probability_value": 3,
-                "confidence": 3,
-                "justification": "Sideways action, lacks intraday catalyst",
-                "fundamental_impact": "Core holding, slow mover",
-                "extra": "RSI neutral"
-            }
-        }
-    },
-    "TSLA": {
-        "2025-05-11": {
-            "result": {
-                "ticker": "TSLA",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 75,
-                    "confidence": "high",
-                    "justification": "Key indicators show a strong upward trend with significant trading volume, especially following the recent rally. The bullish sentiment backed by consistent buying pressure, along with favorable momentum and clear breakout points, indicates a high probability of a significant price movement today."
-                }
-            }
-        },
-        "2025-05-22": {
-            "result": {
-                "ticker": "TSLA",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 75,
-                    "confidence": "high",
-                    "justification": "Strong uptrend in both 5-minute and 1-day charts, with significant volume spikes and high ADX indicating trend strength.",
-                    "extra": "Potential for bullish reversal if resistance levels at $240 hold."
-                }
-            }
-        }
-    },
-    "MSFT": {
-        "2025-05-11": {
-            "result": {
-                "ticker": "MSFT",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 65,
-                    "confidence": "high",
-                    "justification": "The analysis indicates a strong bullish trend supported by recent intraday momentum and significant volume spikes. The current price action is also displaying potential for a breakout past key resistance levels, with moving averages confirming upward momentum. Additionally, the ATR suggests adequate volatility for a substantial price movement today."
-                }
-            }
-        }
-    },
-    "AA": {
-        "2025-05-24": {
-            "result": {
-                "ticker": "AA",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 65,
-                    "confidence": "medium",
-                    "justification": "Recent uptrend on 5m with higher volume. ADX indicates strong directional movement but DI- gaining strength.",
-                    "extra": "While the overall trend is upward, potential volatility may create opportunities for both bullish and bearish movements."
-                }
-            }
-        },
-        "2025-05-29": {
-            "result": null
-        },
-        "2025-06-02": {
-            "result": {
-                "ticker": "AA",
-                "probability_value": 5,
-                "confidence": 2,
-                "justification": "Choppy price action, indecisive volume",
-                "fundamental_impact": "Unclear.",
-                "extra": "Avoid, no clear setup"
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "AA",
-                "probability_value": 2,
-                "confidence": 2,
-                "justification": "Volatile, but trend unclear",
-                "fundamental_impact": "Commodity-linked, economic sensitivity",
-                "extra": "check news"
-            }
-        }
-    },
-    "SPY": {
-        "2025-05-24": {
-            "result": {
-                "ticker": "SPY",
-                "intraday_trend_movement_probability": {
-                    "probability_value": 75,
-                    "confidence": "high",
-                    "justification": "Strong upward momentum detected with high ADX values indicating a validated trend; increased volume suggests continued interest. Daily volatility supports potential upward movement.",
-                    "extra": "If the market opens above yesterday's close with strong volume, the bullish sentiment could further increase positive momentum."
-                }
-            }
-        }
-    },
-    "GAP": {
-        "2025-05-24": {
-            "result": {}
-        },
-        "2025-05-29": {
-            "result": [
-                {
-                    "ticker": "GAP",
-                    "intraday_trend_movement_probability": {
-                        "probability_value": "75%",
-                        "confidence": 7,
-                        "justification": "Strong upward trend after the open, high volume. Positive momentum.",
-                        "fundamental_impact": "Minimal impact.",
-                        "extra": "Possible resistance around $29.30."
-                    }
-                }
-            ]
-        }
-    },
-    "ENVX": {
-        "2025-05-24": {
-            "result": {
-                "ticker": "ENVX",
-                "intraday_trend_movement_probability": {
-                    "probability_value": "70%",
-                    "confidence": "8",
-                    "justification": "Current upward movement post-dip; volume spikes indicating interest; previous day closes show potential for continued rise.",
-                    "fundamental_impact": "Weak fundamentals; losses overshadow revenues, potential for recovery in price if sentiment improves.",
-                    "extra": "Monitor closely around resistance levels; potential for sharp movements based on news or broader market shifts."
-                }
-            }
-        },
-        "2025-05-29": {
-            "result": null
-        },
-        "2025-06-02": {
-            "result": null
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "ENVX",
-                "probability_value": 1,
-                "confidence": 1,
-                "justification": "Downtrend, lacks reversal signals",
-                "fundamental_impact": "High growth potential but unproven",
-                "extra": "avoid"
-            }
-        }
-    },
-    "BLMZ": {
-        "2025-05-24": {
-            "result": {
-                "ticker": "BLMZ",
-                "intraday_trend_movement_probability": {
-                    "probability_value": "75%",
-                    "confidence": "8",
-                    "justification": "Strong upward trend, recent breakout, high volume spikes.",
-                    "fundamental_impact": "Pending developments, recent volatility.",
-                    "extra": "Short-term volatility expected, likely continuation upward."
-                }
-            }
-        }
-    },
     "IMNN": {
-        "2025-05-24": {
+        "2025-06-05": {
             "result": {
                 "ticker": "IMNN",
-                "intraday_trend_movement_probability": {
-                    "probability_value": "65",
-                    "confidence": "7",
-                    "justification": "Recent price uptrend, strong volume increase, bullish sentiment. ADX indicates potential for trending behavior.",
-                    "fundamental_impact": "Negative earnings, small revenue base. Limited current catalysts.",
-                    "extra": "Watch for potential resistance at around recent highs. Volume momentum could drive further movement."
+                "probability_value": 10,
+                "confidence": 4,
+                "justification": "Choppy, low volume, indecisive",
+                "fundamental_impact": "Poor financials",
+                "extra": "too risky, avoid"
+            }
+        },
+        "2025-05-22": {
+            "result": {
+                "ticker": "IMNN",
+                "recommendation": "Due to the significant downtrend and high volatility observed in IMNN, maintaining a cautious stance is advisable. The trend-following and momentum analysis indicate continued downward pressure. While volume spikes suggest some trading activity, the overall negative trend outweighs any potential short-term gains. Therefore, a 'Sell' recommendation is warranted to mitigate potential losses.",
+                "weights": {
+                    "trend_following": 0.4,
+                    "momentum_analysis": 0.25,
+                    "volume_spikes": 0.15,
+                    "volatility_atr": 0.07,
+                    "support_resistance": 0.05,
+                    "breakout_detection": 0.03,
+                    "liquidity_spread": 0.02,
+                    "market_breadth": 0.01,
+                    "correlation_index": 0.01,
+                    "fundamentals": 0.01
                 }
-            }
-        },
-        "2025-05-29": {
-            "result": {
-                "ticker": "IMNN",
-                "probability_value": 5,
-                "confidence": 2,
-                "justification": "low volume, consistent downtrend, failed rallies",
-                "fundamental_impact": "Weak financials.",
-                "extra": "Expect continuation of downtrend"
-            }
-        },
-        "2025-06-02": {
-            "result": {
-                "ticker": "IMNN",
-                "probability_value": 5,
-                "confidence": 2,
-                "justification": "Low volume, no clear trend, mostly sideways",
-                "fundamental_impact": "Weak financials, high risk",
-                "extra": "Avoid, no clear setup"
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "IMNN",
-                "probability_value": 1,
-                "confidence": 1,
-                "justification": "Erratic, low volume; avoid",
-                "fundamental_impact": "Poor financials, high risk",
-                "extra": "Stay away"
-            }
+            },
+            "feedback": "failure"
         }
     },
-    "ACI": {
-        "2025-05-29": {
-            "result": null
-        },
-        "2025-06-02": {
+    "AAPL": {
+        "2025-06-05": {
             "result": {
-                "ticker": "ACI",
-                "probability_value": 40,
-                "confidence": 5,
-                "justification": "volume spike, intraday recovery, broke MA5",
-                "fundamental_impact": "Unclear.",
-                "extra": "High risk, ADX not confirming a strong trend."
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "ACI",
-                "probability_value": 1,
-                "confidence": 1,
-                "justification": "Downtrend, lacks catalysts",
-                "fundamental_impact": "sector laggard",
-                "extra": "no trend"
-            }
-        }
-    },
-    "AFRM": {
-        "2025-05-29": {
-            "result": {
-                "ticker": "AFRM",
-                "probability_value": 40,
+                "ticker": "AAPL",
+                "probability_value": 20,
                 "confidence": 6,
-                "justification": "volume spike, but downtrend, broke support, ADX weak",
-                "fundamental_impact": "Fintech sector bearish.",
-                "extra": "Watch for further downside momentum"
+                "justification": "Downtrend, volume spike selloff",
+                "fundamental_impact": "Mixed earnings.",
+                "extra": "RSI oversold bounce possible"
             }
         },
-        "2025-06-02": {
+        "2025-05-22": {
             "result": {
-                "ticker": "AFRM",
-                "probability_value": 30,
-                "confidence": 4,
-                "justification": "Recent high volume but volatile, indecisive price action",
-                "fundamental_impact": "Mixed financials.",
-                "extra": "Unclear trend, high risk."
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "AFRM",
-                "probability_value": 1,
-                "confidence": 1,
-                "justification": "Down trend",
-                "fundamental_impact": "Volatile market conditions",
-                "extra": "Uncertainty"
-            }
-        }
-    },
-    "ALAB": {
-        "2025-05-29": {
-            "result": {
-                "ticker": "ALAB",
-                "probability_value": 55,
-                "confidence": 6,
-                "justification": "high volume early, testing recent highs, strong daily trend",
-                "fundamental_impact": "potential analyst upgrade in the near future.",
-                "extra": "RSI nearing overbought, pullback possible"
-            }
-        },
-        "2025-06-02": {
-            "result": {
-                "ticker": "ALAB",
-                "probability_value": 60,
-                "confidence": 6,
-                "justification": "high volume, intraday breakout, testing resistance",
-                "fundamental_impact": "Fundamentals are positive, supporting breakout",
-                "extra": "RSI overbought, watch for pullback after initial move"
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "ALAB",
-                "probability_value": 1,
-                "confidence": 1,
-                "justification": "no move",
-                "fundamental_impact": "none",
-                "extra": "none"
-            }
-        }
-    },
-    "AVGO": {
-        "2025-05-29": {
-            "result": {
-                "ticker": "AVGO",
-                "probability_value": 60,
-                "confidence": 7,
-                "justification": "volume spike, intraday trend up, testing resistance",
-                "fundamental_impact": "Semiconductor sector strength could boost.",
-                "extra": "Watch for breakout confirmation above 232."
-            }
-        },
-        "2025-06-02": {
-            "result": {
-                "ticker": "AVGO",
-                "probability_value": 70,
-                "confidence": 7,
-                "justification": "volume spike, uptrend, broke intraday resistance",
-                "fundamental_impact": "Strong fundamentals support further upside",
-                "extra": "Watch for consolidation at new highs."
-            }
-        },
-        "2025-06-04": {
-            "result": {
-                "ticker": "AVGO",
-                "probability_value": 5,
-                "confidence": 4,
-                "justification": "Choppy trading, no clear breakout",
-                "fundamental_impact": "Major tech component, stable earnings",
-                "extra": "Watch for market direction"
-            }
-        }
-    },
-    "ANVX": {
-        "2025-05-29": {
-            "result": null
-        }
-    },
-    "[2025-05-22]": {
-        "2025-05-29": {
-            "result": null
+                "ticker": "AAPL",
+                "recommendation": "AAPL shows a recent downturn but also demonstrates resilience with high trading volumes. Trend-following indicates a short-term downward trend, yet momentum analysis suggests potential for a rebound. Given the stock's volatility and the mixed signals from technical indicators, a 'Hold' recommendation is appropriate. Monitoring the stock's price action for signs of a sustained recovery is crucial before considering a 'Buy' strategy.",
+                "weights": {
+                    "trend_following": 0.4,
+                    "momentum_analysis": 0.25,
+                    "volume_spikes": 0.15,
+                    "volatility_atr": 0.07,
+                    "support_resistance": 0.05,
+                    "breakout_detection": 0.03,
+                    "liquidity_spread": 0.02,
+                    "market_breadth": 0.01,
+                    "correlation_index": 0.01,
+                    "fundamentals": 0.01
+                }
+            },
+            "feedback": "success"
         }
     }
 }

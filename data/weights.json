@@ -1,0 +1,27 @@
+{
+    "default": {
+        "trend_following": 0.4,
+        "momentum_analysis": 0.25,
+        "volume_spikes": 0.15,
+        "volatility_atr": 0.07,
+        "support_resistance": 0.05,
+        "breakout_detection": 0.03,
+        "liquidity_spread": 0.02,
+        "market_breadth": 0.01,
+        "correlation_index": 0.01,
+        "fundamentals": 0.01
+    },
+    "users": {
+        "742024691": {
+            "history": [
+                {
+                    "weights": {
+                        "volume": 0.67,
+                        "chart": 0.43
+                    },
+                    "timestamp": "2025-06-05T09:35:18.598746"
+                }
+            ]
+        }
+    }
+}

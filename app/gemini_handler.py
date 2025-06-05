@@ -183,7 +183,6 @@ def analyze_multiple_with_gemini(
     # Формуємо промпт для Gemini
     prompt = f"""
         {prompt_template} 
-
         Recommended Weights for Your Analysis:
         {weights_section}
 

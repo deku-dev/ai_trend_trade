@@ -2,14 +2,14 @@ import json
 
 from loguru import logger
 from datetime import datetime
-from telegram import Update
+from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.constants import ParseMode
 from telegram.ext import (
     ContextTypes
 )
 from typing import Dict, List
 
-from app.utils_ai import validate_date, add_to_history, update_history, load_tickers
+from app.utils_ai import load_history, save_history, validate_date, add_to_history, update_history, load_tickers
 from app.chart_data import fetch_market_prompt
 from app.gpt_handler import analyze_with_gpt, analyze_multiple_with_gpt
 from app.financial_data import fetch_financial_prompt
@@ -47,8 +47,8 @@ async def analyze_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
         fundamental_data = fetch_financial_prompt(ticker, filing_date_to=target_date.strftime('%Y-%m-%d'))
 
         result = analyze_with_gpt(ticker, data_5m, data_1d, fundamental_data, user_id=update.effective_user.id)
-        add_to_history(ticker)
-        update_history(ticker, result)
+        add_to_history(ticker, target_date.strftime('%Y-%m-%d'))
+        update_history(ticker, result, target_date.strftime('%Y-%m-%d'))
 
         pretty = json.dumps(result, ensure_ascii=False, indent=2)
         await update.message.reply_text(f"<pre>{pretty}</pre>", parse_mode=ParseMode.HTML)
@@ -103,7 +103,7 @@ async def analyze_all_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
                 tk, filing_date_to=target_date.strftime('%Y-%m-%d')
             )
             # Додаємо до історії (результат буде оновлено пізніше)
-            add_to_history(tk)
+            add_to_history(tk, target_date.strftime('%Y-%m-%d'))
         except Exception as e:
             logger.error(f"Error fetching data for {tk}: {e}")
             # Якщо не вдалося отримати дані для цього тикера — виключаємо його
@@ -142,13 +142,44 @@ async def analyze_all_gpt(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         tk = rec["ticker"]
         # оновлюємо результат в історії
         try:
-            update_history(tk, rec)
+            update_history(tk, rec, target_date.strftime('%Y-%m-%d'))
         except Exception:
             logger.warning(f"Не вдалося оновити історію для {tk}")
+            
+        keyboard = [
+            [
+                InlineKeyboardButton("Успіх", callback_data=f"feedback:success:{tk}:{target_date.strftime('%Y-%m-%d')}"),
+                InlineKeyboardButton("Невдалий", callback_data=f"feedback:failure:{tk}:{target_date.strftime('%Y-%m-%d')}")
+            ]
+        ]
+        reply_markup = InlineKeyboardMarkup(keyboard)
 
         # надсилаємо користувачу
         pretty = json.dumps(rec, ensure_ascii=False, indent=2)
         await update.message.reply_text(
-            f"<b>{tk}</b>\n<pre>{pretty}</pre>",
+            f"<b>[{tk}] {target_date.strftime('%Y-%m-%d')}</b>\n<pre>{pretty}</pre>",
+            parse_mode=ParseMode.HTML,
+            reply_markup=reply_markup
+        )
+        
+async def feedback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    query = update.callback_query
+    await query.answer()
+    
+    # Parse callback data: "feedback:result:ticker:date"
+    _, result, ticker, date = query.data.split(':')
+    
+    # Update history with feedback
+    history = load_history()
+    if ticker in history and date in history[ticker]:
+        history[ticker][date]["feedback"] = result
+        save_history(history)
+        await query.edit_message_text(
+            text=f"{query.message.text}\n\n✅ Відгук збережено: {result}",
+            parse_mode=ParseMode.HTML
+        )
+    else:
+        await query.edit_message_text(
+            text=f"{query.message.text}\n\n❌ Не вдалося зберегти відгук",
             parse_mode=ParseMode.HTML
         )

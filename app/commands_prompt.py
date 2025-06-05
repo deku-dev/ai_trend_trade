@@ -1,8 +1,9 @@
 # commands_prompt.py
 from telegram import Update
-from telegram.ext import ContextTypes, CommandHandler
+from telegram.ext import ContextTypes
 from app.prompt_manager import save_prompt, get_prompt_history, get_active_prompt
 from datetime import datetime
+from telegram.constants import ParseMode
 
 async def set_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Command: /setmyprompt <prompt text>"""
@@ -23,7 +24,7 @@ async def show_my_prompt(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     
     await update.message.reply_text(
         f"Your current prompt:\n\n{prompt}",
-        parse_mode="Markdown"
+        parse_mode=ParseMode.HTML
     )
 
 async def prompt_history(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:

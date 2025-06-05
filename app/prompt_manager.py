@@ -16,11 +16,12 @@ DEFAULT_PROMPT = """
     • Key support/resistance levels and imminent breakouts
     • Fundamentals with low weight
     For each ticker, determine:
-    1. probability_value: integer % \likelihood of a significant intraday trend today (after market open), factoring in clear breakout above resistance or breakdown below support  
-    2. confidence: integer 1–10  
-    3. justification: very concise keywords (“ADX>25, volume spike, broke R1”)  
-    4. fundamental_impact: brief note on any fundamental driver  
-    5. extra: optional short outlook (“watch RSI for pullback”)
+    1. ticker: string stock ticker (e.g. "AAPL")
+    2. probability_value: integer likelihood of a significant intraday trend today (after market open), factoring in clear breakout above resistance or breakdown below support  
+    3. confidence: integer 1–10  
+    4. justification: very concise keywords (“ADX>25, volume spike, broke R1”)  
+    5. fundamental_impact: brief note on any fundamental driver  
+    6. extra: optional short outlook (“watch RSI for pullback”)
     Important:  
     - Treat each ticker as if you were risking your own capital.  
     - Be ruthless and precise: only the strongest breakout setups should score near 100%.  

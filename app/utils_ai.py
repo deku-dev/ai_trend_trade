@@ -36,25 +36,23 @@ def is_already_processed(ticker):
     return False
 
 # Додавання нового запису в історію (з результатом за замовчуванням None)
-def add_to_history(ticker):
+def add_to_history(ticker, date_str=None):
     history = load_history()
-    today = datetime.now().strftime('%Y-%m-%d')
     
     if ticker not in history:
         history[ticker] = {}
     
-    if today not in history[ticker]:
-        history[ticker][today] = {"result": None}
+    if date_str not in history[ticker]:
+        history[ticker][date_str] = {"result": None}
     
     save_history(history)
 
 # Оновлення результату для запису
-def update_history(ticker, result):
+def update_history(ticker, result, date_str=None):
     history = load_history()
-    today = datetime.now().strftime('%Y-%m-%d')
     
-    if ticker in history and today in history[ticker]:
-        history[ticker][today]["result"] = result
+    if ticker in history and date_str in history[ticker]:
+        history[ticker][date_str]["result"] = result
         save_history(history)
 
 def load_features():
@@ -71,3 +69,9 @@ def validate_date(date_str: str) -> datetime | None:
         return datetime.strptime(date_str, "%Y-%m-%d")
     except ValueError:
         return None
+    
+def update_feedback(ticker: str, date: str, feedback: str) -> None:
+    history = load_history()
+    if ticker in history and date in history[ticker]:
+        history[ticker][date]["feedback"] = feedback
+        save_history(history)
