@@ -69,7 +69,7 @@ async def analyze_all_gem(update: Update, context: ContextTypes.DEFAULT_TYPE) ->
         if args:
             # розбиваємо усі передані токени за комами
             for token in args:
-                ticker_args += [t.strip().upper() for t in token.split(',') if t.strip()]
+                ticker_args += [t.strip().upper() for t in token.split(' ') if t.strip()]
 
     # 2) Якщо тикери не передали — завантажуємо усі з CSV
     if ticker_args:
