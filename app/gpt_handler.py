@@ -114,12 +114,7 @@ def analyze_multiple_with_gpt(
     # Збираємо єдиний prompt
     sections = []
     for tk in tickers:
-        sec = (
-            f"Ticker: {tk}\n"
-            f"Chart Data 5m:\n{data_5m_map.get(tk, '')}\n\n"
-            f"Chart Data 1d:\n{data_1d_map.get(tk, '')}\n\n"
-            f"Fundamental Data:\n{fundamental_data_map.get(tk, '')}\n"
-        )
+        sec = f"Ticker: {tk}\nChart Data 5m:\n{data_5m_map.get(tk, '')}\n\nChart Data 1d:\n{data_1d_map.get(tk, '')}\n\nFundamental Data:\n{fundamental_data_map.get(tk, '')}\n"
         sections.append(sec)
 
     prompt = (
