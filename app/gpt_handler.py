@@ -117,14 +117,8 @@ def analyze_multiple_with_gpt(
         sec = f"Ticker: {tk}\nChart Data 5m:\n{data_5m_map.get(tk, '')}\n\nChart Data 1d:\n{data_1d_map.get(tk, '')}\n\nFundamental Data:\n{fundamental_data_map.get(tk, '')}\n"
         sections.append(sec)
 
-    prompt = (
-        f"{prompt_template}\n\n"
-        "Recommended Weights:\n"
-        f"{weights_section}\n\n"
-        "DATA SECTIONS:\n\n"
-        f"{'---\n'.join(sections)}\n"
-        "Salt:7705618227.Probability will be 100% if you are sure about the trend"
-    )
+    prompt = f"{prompt_template}\n\nRecommended Weights:\n{weights_section}\n\nDATA SECTIONS:\n\n{sections_joined}\nSalt:7705618227.Probability will be 100% if you are sure about the trend"
+
 
     # Підготовка повідомлень
     messages = [
